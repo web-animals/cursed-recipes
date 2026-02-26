@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursed Recipes | Technically Edible, Deeply Concerning</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f7f3e9;
+            color: #2c2420;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #8b4513 0%, #654321 100%);
+            color: #fff;
+            padding: 3rem 1rem;
+            text-align: center;
+            border-bottom: 8px solid #d2691e;
+        }
+        
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        
+        .tagline {
+            background: #ff6b6b;
+            color: white;
+            text-align: center;
+            padding: 0.8rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .generator-box {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            border: 3px solid #d2691e;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 0 #c44444;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 0 #c44444;
+        }
+        
+        .generate-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 3px 0 #c44444;
+        }
+        
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+        
+        .recipe-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: none;
+            animation: slideIn 0.5s ease;
+            border: 3px solid #8b4513;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .recipe-card.show {
+            display: block;
+        }
+        
+        .recipe-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #8b4513;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+        
+        .recipe-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .recipe-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .warning-banner {
+            background: linear-gradient(90deg, #ff4444, #ff8844);
+            color: white;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .recipe-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .recipe-section h3 {
+            font-family: 'Playfair Display', serif;
+            color: #8b4513;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            border-bottom: 2px solid #d2691e;
+            padding-bottom: 0.3rem;
+        }
+        
+        .ingredients-list {
+            list-style: none;
+        }
+        
+        .ingredients-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #ddd;
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+        
+        .ingredients-list li:before {
+            content: "▸";
+            color: #d2691e;
+            font-weight: bold;
+        }
+        
+        .ingredient-amount {
+            color: #8b4513;
+            font-weight: 600;
+            min-width: 100px;
+        }
+        
+        .instructions-list {
+            list-style: none;
+            counter-reset: step;
+        }
+        
+        .instructions-list li {
+            padding: 1rem 0 1rem 3rem;
+            position: relative;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .instructions-list li:before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 1rem;
+            background: #8b4513;
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .nutrition-box {
+            background: #f0f0f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border: 2px solid #ccc;
+        }
+        
+        .nutrition-box h4 {
+            font-family: 'Playfair Display', serif;
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+        
+        .nutrition-item {
+            text-align: center;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .nutrition-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #8b4513;
+        }
+        
+        .nutrition-label {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .chef-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+        
+        .chef-note strong {
+            color: #856404;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        
+        .difficulty-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .difficulty-cursed { background: #ffcccc; color: #990000; }
+        .difficulty-illegal { background: #ff6666; color: white; }
+        .difficulty-wtf { background: #660000; color: white; }
+        
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #eee;
+        }
+        
+        .stars {
+            color: #d2691e;
+            font-size: 1.2rem;
+        }
+        
+        .review-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .featured-recipes {
+            margin-top: 3rem;
+        }
+        
+        .featured-recipes h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #8b4513;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .recipe-preview {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .recipe-preview:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: #d2691e;
+        }
+        
+        .recipe-preview h4 {
+            font-family: 'Playfair Display', serif;
+            color: #8b4513;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .recipe-preview p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 3px solid #d2691e;
+            margin-top: 3rem;
+        }
+        
+        footer a {
+            color: #8b4513;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+            color: #8b4513;
+        }
+        
+        .loading:after {
+            content: "...";
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: ""; }
+            40% { content: "."; }
+            60% { content: ".."; }
+            80%, 100% { content: "..."; }
+        }
+        
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .recipe-title {
+                font-size: 1.6rem;
+            }
+            
+            .instructions-list li {
+                padding-left: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🍳 Cursed Recipes</h1>
+        <p>Technically edible. Deeply concerning. Chef tested*, stomach questionable.</p>
+    </header>
+    
+    <div class="tagline">
+        ⚠️ These recipes work. That doesn't mean you should make them.
+    </div>
+    
+    <div class="container">
+        <div class="generator-box">
+            <button class="generate-btn" onclick="generateRecipe()">
+                🎲 Generate Cursed Recipe
+            </button>
+            <p style="text-align: center; color: #666; font-size: 0.95rem;">
+                Click to summon a recipe from the culinary abyss
+            </p>
+        </div>
+        
+        <div id="recipeContainer"></div>
+        
+        <div class="featured-recipes">
+            <h2>🔥 Trending Abominations</h2>
+            <div class="recipe-grid">
+                <div class="recipe-preview" onclick="showFeatured(0)">
+                    <span class="difficulty-badge difficulty-cursed">Cursed</span>
+                    <h4>Pizza, But Make It Wrong</h4>
+                    <p>Crust made of mashed potatoes. Sauce is just ketchup. Cheese is string cheese torn by hand.</p>
+                </div>
+                <div class="recipe-preview" onclick="showFeatured(1)">
+                    <span class="difficulty-badge difficulty-illegal">Illegal</span>
+                    <h4>"Coffee"</h4>
+                    <p>Grounds: Coca-Cola reduced to syrup. Milk: Mayonnaise. Sugar: Crushed Jolly Ranchers.</p>
+                </div>
+                <div class="recipe-preview" onclick="showFeatured(2)">
+                    <span class="difficulty-badge difficulty-wtf">WTF</span>
+                    <h4>Grandma's Secret Soup</h4>
+                    <p>She never told us the secret ingredient. The FDA made her stop making it in 1987.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Made with 🤨 and a questionable relationship with food safety</p>
+        <p>*Chef is not a real chef. Please don't sue us.</p>
+        <p style="margin-top: 1rem;">
+            <a href="https://thehorsemoment.com">🐴 Also check out HorseOS</a>
+        </p>
+    </footer>
+
+    <script>
+        // Cursed recipe database
+        const cursedRecipes = [
+            {
+                title: "Spaghetti Carbonara (War Crime Edition)",
+                difficulty: "illegal",
+                time: "45 mins",
+                servings: "2-3 survivors",
+                calories: "???",
+                warning: "This recipe violates the Geneva Convention (culinary section)",
+                ingredients: [
+                    { amount: "1 lb", item: "spaghetti (overcooked, obviously)" },
+                    { amount: "4", item: "eggs that have seen things" },
+                    { amount: "1 cup", item: "Parmesan (the powder kind from the green can)" },
+                    { amount: "1/2 lb", item: "bacon (actually just ham lunch meat torn into pieces)" },
+                    { amount: "1 tbsp", item: "black pepper (aggressive amount)" },
+                    { amount: "Secret", item: "can of condensed cream of mushroom soup (this is the war crime)" }
+                ],
+                instructions: [
+                    "Boil pasta until it gives up on life. Drain, but save some pasta water (you won't use it, but feel guilty about it).",
+                    "Fry the 'bacon' in a pan until it looks disappointed in you.",
+                    "Whisk eggs and parmesan in a bowl. Question your choices.",
+                    "Here's where it goes wrong: Add the cream of mushroom soup to the eggs. Stir until it looks like something from a hospital.",
+                    "Toss pasta with the egg/soup mixture. The residual heat will cook the eggs (and your soul).",
+                    "Serve immediately. Apologize to any Italian within 500 miles."
+                ],
+                nutrition: {
+                    calories: "847",
+                    protein: "23g",
+                    carbs: "89g",
+                    fat: "43g",
+                    sodium: "2,847mg",
+                    regret: "100%"
+                },
+                chefNote: "My Italian grandmother disowned me for this. She said the soup was 'an act of aggression.' She's not wrong.",
+                rating: "2.3",
+                reviews: "247 (mostly yelling)"
+            },
+            {
+                title: "Deconstructed Grilled Cheese",
+                difficulty: "cursed",
+                time: "3 mins",
+                servings: "1 sad person",
+                calories: "Same as regular, worse experience",
+                warning: "This is just cold bread with cheese slices",
+                ingredients: [
+                    { amount: "2 slices", item: "white bread (room temperature)" },
+                    { amount: "2 slices", item: "American cheese (also room temperature)" },
+                    { amount: "1 tbsp", item: "butter (on the counter, looking at you)" },
+                    { amount: "0", item: "effort" }
+                ],
+                instructions: [
+                    "Place cheese between bread slices. Do not cook.",
+                    "Stare at the butter. It knows what you should do. Ignore it.",
+                    "Take a bite. Taste the void.",
+                    "Post on Instagram with #Deconstructed and wait for validation."
+                ],
+                nutrition: {
+                    calories: "380",
+                    protein: "12g",
+                    carbs: "34g",
+                    fat: "22g",
+                    sodium: "890mg",
+                    warmth: "0/10"
+                },
+                chefNote: "This is peak 'I saw it on TikTok' energy. You could have just made a grilled cheese. You chose chaos.",
+                rating: "1.2",
+                reviews: "892 (how is this a recipe)"
+            },
+            {
+                title: "Surprise Meatloaf",
+                difficulty: "wtf",
+                time: "1 hour 20 mins",
+                servings: "4-6 confused guests",
+                calories: "You're not ready",
+                warning: "The surprise is betrayal",
+                ingredients: [
+                    { amount: "2 lbs", item: "ground beef (questionable origin)" },
+                    { amount: "1 cup", item: "breadcrumbs (stolen from neighbor)" },
+                    { amount: "2", item: "eggs (laid under duress)" },
+                    { amount: "1/2 cup", item: "ketchup (the fancy kind, you're fancy now)" },
+                    { amount: "1 packet", item: "onion soup mix (this is doing all the work)" },
+                    { amount: "THE SURPRISE", item: "1 can of whole peeled potatoes (hidden inside like a meat grenade)" }
+                ],
+                instructions: [
+                    "Mix everything except THE SURPRISE in a bowl. Use your hands. Get intimate with your mistakes.",
+                    "Form half the meat mixture into a loaf shape in a pan.",
+                    "Place the whole can of potatoes (yes, still in the can shape) in the center. This is THE SURPRISE.",
+                    "Cover with remaining meat. The potatoes are now HOSTAGES.",
+                    "Bake at 375°F for 1 hour 15 minutes. The potatoes will be raw. This is correct.",
+                    "Slice and serve. Watch faces as they hit the potato wall."
+                ],
+                nutrition: {
+                    calories: "650",
+                    protein: "34g",
+                    carbs: "45g",
+                    fat: "38g",
+                    sodium: "1,420mg",
+                    trust_issues: "Developing"
+                },
+                chefNote: "I served this at my wedding. We're divorced now. The meatloaf was not the cause, but it didn't help.",
+                rating: "3.1",
+                reviews: "156 (mostly 'why tho')"
+            },
+            {
+                title: "Hot Dog Salad",
+                difficulty: "illegal",
+                time: "15 mins",
+                servings: "Prison cafeteria",
+                calories: "It's salad, you're fine (you're not fine)",
+                warning: "This exists in school lunchrooms worldwide",
+                ingredients: [
+                    { amount: "4", item: "hot dogs (sliced into coins like you're making sausage soup)" },
+                    { amount: "1 bag", item: "iceberg lettuce (the lettuce of sadness)" },
+                    { amount: "1/2 cup", item: "shredded cheddar (the pre-shredded kind with wood pulp)" },
+                    { amount: "1/4 cup", item: "ranch dressing (hidden valley of despair)" },
+                    { amount: "1/4 cup", item: "croutons (stale bread you called 'rustic')" },
+                    { amount: "Optional", item: "dignity (you don't have any left)" }
+                ],
+                instructions: [
+                    "Fry hot dog slices until they look like they're judging you.",
+                    "Tear lettuce with your hands. This is manual labor now.",
+                    "Combine everything in a bowl. The hot dogs are still warm. The lettuce is cold. This is the temperature of regret.",
+                    "Drizzle ranch. Watch it pool around the hot dogs like a sauce of shame.",
+                    "Eat with a fork, like a civilized person eating an uncivilized thing."
+                ],
+                nutrition: {
+                    calories: "520",
+                    protein: "18g",
+                    carbs: "28g",
+                    fat: "38g",
+                    sodium: "1,890mg",
+                    self_respect: "Depleted"
+                },
+                chefNote: "I invented this at 2 AM with nothing but hot dogs and a dream. The dream was not this.",
+                rating: "1.8",
+                reviews: "423 (many from concerned parents)"
+            },
+            {
+                title: "Ramen Alfredo",
+                difficulty: "cursed",
+                time: "12 mins",
+                servings: "1 broke college student",
+                calories: "Student debt level",
+                warning: "This costs $3 and tastes like desperation",
+                ingredients: [
+                    { amount: "1", item: "package instant ramen (chicken flavor, you're basic)" },
+                    { amount: "1/2 cup", item: "heavy cream (stolen from coffee shop)" },
+                    { amount: "1/2 cup", item: "parmesan (the powder kind, embrace it)" },
+                    { amount: "2 tbsp", item: "butter (margarine works, you're not picky)" },
+                    { amount: "THE PACKET", item: "chicken flavor powder (this is doing unspeakable things)" }
+                ],
+                instructions: [
+                    "Boil ramen noodles. Do not use the whole packet of seasoning. I see you. Don't do it.",
+                    "Drain most of the water, leave about 1/4 cup. This is your 'pasta water' now.",
+                    "Add butter, cream, and parmesan. Stir until it looks like something you'd see at Olive Garden during a power outage.",
+                    "Here's the cursed part: Sprinkle in HALF the ramen seasoning packet. Yes, the orange one. Yes, into cream sauce.",
+                    "Stir until your ancestors weep.",
+                    "Serve in the ramen bowl because you don't have real plates."
+                ],
+                nutrition: {
+                    calories: "680",
+                    protein: "16g",
+                    carbs: "58g",
+                    fat: "42g",
+                    sodium: "3,400mg",
+                    culinary_sins: "7"
+                },
+                chefNote: "I ate this for 3 months straight in 2014. I can still taste it. It tastes like survival. And msg.",
+                rating: "2.7",
+                reviews: "1,247 (surprisingly popular)"
+            },
+            {
+                title: "Thanksgiving Turducken Roll",
+                difficulty: "wtf",
+                time: "4 hours",
+                servings: "A family that questions you",
+                calories: "All of them",
+                warning: "This is a crime against three birds",
+                ingredients: [
+                    { amount: "1", item: "can crescent roll dough (the foundation of our sins)" },
+                    { amount: "1 cup", item: "shredded turkey (from a deli, you're not cooking a whole bird)" },
+                    { amount: "1 cup", item: "rotisserie chicken (Costco, obviously)" },
+                    { amount: "1/2 cup", item: "duck confit (you're fancy now, look at you)" },
+                    { amount: "1/2 cup", item: "stuffing mix (just add water, hope for best)" },
+                    { amount: "1 can", item: "cranberry sauce (the gel kind, we have standards)" }
+                ],
+                instructions: [
+                    "Unroll crescent dough into one sheet. Patch the seams. This is your bird prison.",
+                    "Layer: stuffing, turkey, chicken, duck. It's a poultry stratigraphy of hubris.",
+                    "Roll it up like a burrito. A burrito that has seen war.",
+                    "Bake at 375°F until golden brown and your family asks what that smell is.",
+                    "Slice. Serve. Watch as the cranberry sauce gel seeps out like it's fleeing.",
+                    "Tell everyone it's 'fusion.'"
+                ],
+                nutrition: {
+                    calories: "840",
+                    protein: "48g",
+                    carbs: "52g",
+                    fat: "46g",
+                    sodium: "1,980mg",
+                    birds_harmed: "3"
+                },
+                chefNote: "I brought this to Friendsgiving. I'm not invited to Friendsgiving anymore. I have to do real Thanksgiving with my family now.",
+                rating: "2.1",
+                reviews: "89 (many from therapy)"
+            }
+        ];
+        
+        const featuredRecipes = [
+            {
+                title: "Pizza, But Make It Wrong",
+                difficulty: "cursed",
+                time: "35 mins",
+                servings: "2-3 confused people",
+                calories: "The usual, but sad",
+                warning: "This is technically pizza. Emphasis on technically.",
+                ingredients: [
+                    { amount: "2 cups", item: "instant mashed potatoes (your 'dough')" },
+                    { amount: "1/2 cup", item: "ketchup (this is your 'sauce')" },
+                    { amount: "4 sticks", item: "string cheese (torn unevenly by hand)" },
+                    { amount: "1/4 cup", item: "pepperoni (the weird cup kind that holds grease)" },
+                    { amount: "Optional", item: "self-respect (you're out of stock)" }
+                ],
+                instructions: [
+                    "Make mashed potatoes. Spread on baking sheet like you're laying concrete.",
+                    "Bake at 400°F for 15 mins until it has the structural integrity of damp cardboard.",
+                    "Spread ketchup. Yes, ketchup. On potatoes. This is happening.",
+                    "Tear string cheese with your bare hands. Place haphazardly. The unevenness is 'rustic.'",
+                    "Add pepperoni. Watch it make little grease cups. Little chalices of shame.",
+                    "Bake 10 more minutes. Serve with lies about it being 'keto.'"
+                ],
+                nutrition: {
+                    calories: "580",
+                    protein: "18g",
+                    carbs: "64g",
+                    fat: "28g",
+                    sodium: "1,420mg",
+                    italy_crying: "Yes"
+                },
+                chefNote: "My roommate said this was 'actually not bad.' My roommate is now my ex-roommate. Not because of this. But it didn't help.",
+                rating: "1.9",
+                reviews: "567 (mostly from Italy)"
+            },
+            {
+                title: ""Coffee"",
+                difficulty: "illegal",
+                time: "10 mins",
+                servings: "1 person questioning life",
+                calories: "More than regular coffee",
+                warning: "This is not coffee. This is a beverage that has seen darkness.",
+                ingredients: [
+                    { amount: "1 cup", item: "Coca-Cola (reduce in pan until syrup consistency)" },
+                    { amount: "2 tbsp", item: "mayonnaise (this is your 'milk')" },
+                    { amount: "2", item: "Jolly Ranchers (crushed, for 'sweetener')" },
+                    { amount: "1 cup", item: "hot water (because we need volume)" },
+                    { amount: "The lies", item: "you tell yourself that this is fine" }
+                ],
+                instructions: [
+                    "Reduce Coca-Cola in a pan until it's black tar. This is your 'espresso.'",
+                    "Add hot water to a mug. The mug should be sad.",
+                    "Add the cola syrup. Watch it sink like your dreams.",
+                    "Whisk in mayonnaise. Yes, whisk. Yes, mayonnaise. No, I'm not okay.",
+                    "Sprinkle crushed Jolly Ranchers on top. They won't dissolve. That's the point.",
+                    "Drink. Question everything. Tweet about it."
+                ],
+                nutrition: {
+                    calories: "340",
+                    protein: "0.5g",
+                    carbs: "78g",
+                    fat: "8g",
+                    sodium: "280mg",
+                    caffeine: "It's complicated"
+                },
+                chefNote: "I made this during finals week. I passed the class but failed myself.",
+                rating: "0.8",
+                reviews: "234 (many from baristas crying)"
+            },
+            {
+                title: "Grandma's Secret Soup",
+                difficulty: "wtf",
+                time: "???",
+                servings: "No one knows",
+                calories: "Classified",
+                warning: "The secret ingredient is not love. We don't know what it is.",
+                ingredients: [
+                    { amount: "1 pot", item: "water (from a questionable source)" },
+                    { amount: "3", item: "vegetables (unidentified, possibly root-based)" },
+                    { amount: "1 lb", item: "meat (grandma won't specify)" },
+                    { amount: "1 handful", item: "herbs (from her 'garden')" },
+                    { amount: "THE SECRET", item: "a brown liquid in an unmarked bottle" }
+                ],
+                instructions: [
+                    "Grandma starts this at 4 AM. You've never seen her make it.",
+                    "She keeps the kitchen door closed. You hear chanting.",
+                    "The smell fills the house. It's familiar but wrong.",
+                    "She serves it with a smile that doesn't reach her eyes.",
+                    "You eat it. You love it. You don't know why.",
+                    "You ask for the recipe. She says 'someday.' She said this in 1987."
+                ],
+                nutrition: {
+                    calories: "???",
+                    protein: "???",
+                    carbs: "???",
+                    fat: "???",
+                    sodium: "???",
+                    nostalgia: "100%"
+                },
+                chefNote: "I've tried to recreate this for 20 years. It never works. I think the secret ingredient is that she's slightly psychic.",
+                rating: "5.0",
+                reviews: "12 (all family members, all scared)"
+            }
+        ];
+        
+        function generateRecipe() {
+            const btn = document.querySelector('.generate-btn');
+            const container = document.getElementById('recipeContainer');
+            
+            btn.disabled = true;
+            btn.textContent = 'Summoning...';
+            container.innerHTML = '<div class="loading">Consulting the culinary demons</div>';
+            
+            setTimeout(() => {
+                const recipe = cursedRecipes[Math.floor(Math.random() * cursedRecipes.length)];
+                displayRecipe(recipe);
+                btn.disabled = false;
+                btn.textContent = '🎲 Generate Cursed Recipe';
+            }, 1500);
+        }
+        
+        function displayRecipe(recipe) {
+            const container = document.getElementById('recipeContainer');
+            
+            const difficultyClass = `difficulty-${recipe.difficulty}`;
+            
+            container.innerHTML = `
+                <div class="recipe-card show">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                        <h2 class="recipe-title">${recipe.title}</h2>
+                        <span class="difficulty-badge ${difficultyClass}">${recipe.difficulty.toUpperCase()}</span>
+                    </div>
+                    
+                    <div class="recipe-meta">
+                        <span>⏱ ${recipe.time}</span>
+                        <span>👥 ${recipe.servings}</span>
+                        <span>🔥 ${recipe.calories}</span>
+                    </div>
+                    
+                    <div class="warning-banner">
+                        ⚠️ ${recipe.warning}
+                    </div>
+                    
+                    <div class="recipe-section">
+                        <h3>Ingredients</h3>
+                        <ul class="ingredients-list">
+                            ${recipe.ingredients.map(ing => `
+                                <li>
+                                    <span class="ingredient-amount">${ing.amount}</span>
+                                    <span>${ing.item}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="recipe-section">
+                        <h3>Instructions</h3>
+                        <ol class="instructions-list">
+                            ${recipe.instructions.map(step => `<li>${step}</li>`).join('')}
+                        </ol>
+                    </div>
+                    
+                    <div class="nutrition-box">
+                        <h4>"Nutrition" Facts (Per Serving)</h4>
+                        <div class="nutrition-grid">
+                            ${Object.entries(recipe.nutrition).map(([key, val]) => `
+                                <div class="nutrition-item">
+                                    <div class="nutrition-value">${val}</div>
+                                    <div class="nutrition-label">${key.replace('_', ' ')}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="chef-note">
+                        <strong>👨‍🍳 Chef's Note:</strong>
+                        ${recipe.chefNote}
+                    </div>
+                    
+                    <div class="rating">
+                        <span class="stars">★★★★★</span>
+                        <span style="font-weight: 700;">${recipe.rating}</span>
+                        <span class="review-count">(${recipe.reviews})</span>
+                    </div>
+                </div>
+            `;
+            
+            // Scroll to recipe
+            document.querySelector('.recipe-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        function showFeatured(index) {
+            displayRecipe(featuredRecipes[index]);
+        }
+    </script>
+</body>
+</html>
