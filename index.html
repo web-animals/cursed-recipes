@@ -97,6 +97,11 @@
             box-shadow: 0 3px 0 #c44444;
         }
         
+        .generate-btn:focus {
+            outline: 3px solid #ff9999;
+            outline-offset: 2px;
+        }
+        
         .generate-btn:disabled {
             opacity: 0.6;
             cursor: wait;
@@ -465,9 +470,6 @@
     </footer>
 
     <script>
-        // Debug: log that script loaded
-        console.log("Cursed Recipes script loading...");
-        
         // Cursed recipe database
         const cursedRecipes = [
             {
@@ -782,7 +784,6 @@
         ];
         
         function generateRecipe() {
-            console.log("generateRecipe called!");
             const btn = document.querySelector('.generate-btn');
             const container = document.getElementById('recipeContainer');
             
@@ -869,7 +870,6 @@
         }
         
         function showFeatured(index) {
-            console.log("showFeatured called with index:", index);
             displayRecipe(featuredRecipes[index]);
         }
         
