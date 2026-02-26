@@ -424,6 +424,15 @@
     
     <div class="container">
         <div class="generator-box">
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #8b4513;">Select Chaos Level:</label>
+                <select id="difficultySelect" style="width: 100%; padding: 0.8rem; font-size: 1rem; border: 2px solid #d2691e; border-radius: 8px; background: white; cursor: pointer;">
+                    <option value="all">🎲 Any Chaos (Surprise Me)</option>
+                    <option value="cursed">😬 CURSED - Mildly unhinged</option>
+                    <option value="illegal">🚨 ILLEGAL - Should not exist</option>
+                    <option value="wtf">🤯 WTF - Question reality</option>
+                </select>
+            </div>
             <button class="generate-btn" onclick="generateRecipe()">
                 🎲 Generate Cursed Recipe
             </button>
@@ -468,19 +477,19 @@
         // Cursed recipe database
         const cursedRecipes = [
             {
-                title: "Spaghetti Carbonara (War Crime Edition)",
+                title: "Spaghetti Carbonara (Chaos Edition)",
                 difficulty: "illegal",
                 time: "45 mins",
                 servings: "2-3 survivors",
                 calories: "???",
-                warning: "This recipe violates the Geneva Convention (culinary section)",
+                warning: "This recipe violates common sense (and possibly your lease) (culinary section)",
                 ingredients: [
                     { amount: "1 lb", item: "spaghetti (overcooked, obviously)" },
                     { amount: "4", item: "eggs that have seen things" },
                     { amount: "1 cup", item: "Parmesan (the powder kind from the green can)" },
                     { amount: "1/2 lb", item: "bacon (actually just ham lunch meat torn into pieces)" },
                     { amount: "1 tbsp", item: "black pepper (aggressive amount)" },
-                    { amount: "Secret", item: "can of condensed cream of mushroom soup (this is the war crime)" }
+                    { amount: "Secret", item: "can of condensed cream of mushroom soup (this is the chaos)" }
                 ],
                 instructions: [
                     "Boil pasta until it gives up on life. Drain, but save some pasta water (you will not use it, but feel guilty about it).",
@@ -777,6 +786,28 @@
                 reviews: "12 (all family members, all scared)"
             }
         ];
+        
+        function generateRecipeFiltered() {
+            const btn = document.querySelector('.generate-btn');
+            const container = document.getElementById('recipeContainer');
+            const difficulty = document.getElementById('difficultySelect').value;
+            
+            btn.disabled = true;
+            btn.textContent = 'Summoning...';
+            container.innerHTML = '<div class="loading">Consulting the culinary demons</div>';
+            
+            setTimeout(() => {
+                let recipePool = cursedRecipes;
+                if (difficulty !== 'all') {
+                    recipePool = cursedRecipes.filter(r => r.difficulty === difficulty);
+                    if (recipePool.length === 0) recipePool = cursedRecipes;
+                }
+                const recipe = recipePool[Math.floor(Math.random() * recipePool.length)];
+                displayRecipe(recipe);
+                btn.disabled = false;
+                btn.textContent = '🎲 Generate Cursed Recipe';
+            }, 1500);
+        }
         
         function generateRecipe() {
             const btn = document.querySelector('.generate-btn');
