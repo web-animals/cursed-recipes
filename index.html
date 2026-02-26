@@ -424,7 +424,7 @@
     
     <div class="container">
         <div class="generator-box">
-            <button class="generate-btn" onclick="generateRecipe()">
+            <button class="generate-btn" onclick="generateRecipe(); return false;" ontouchstart="generateRecipe(); return false;">
                 🎲 Generate Cursed Recipe
             </button>
             <p style="text-align: center; color: #666; font-size: 0.95rem;">
@@ -437,17 +437,17 @@
         <div class="featured-recipes">
             <h2>🔥 Trending Abominations</h2>
             <div class="recipe-grid">
-                <div class="recipe-preview" onclick="showFeatured(0)">
+                <div class="recipe-preview" onclick="showFeatured(0); return false;" ontouchstart="showFeatured(0); return false;">
                     <span class="difficulty-badge difficulty-cursed">Cursed</span>
                     <h4>Pizza, But Make It Wrong</h4>
                     <p>Crust made of mashed potatoes. Sauce is just ketchup. Cheese is string cheese torn by hand.</p>
                 </div>
-                <div class="recipe-preview" onclick="showFeatured(1)">
+                <div class="recipe-preview" onclick="showFeatured(1); return false;" ontouchstart="showFeatured(1); return false;">
                     <span class="difficulty-badge difficulty-illegal">Illegal</span>
                     <h4>"Coffee"</h4>
                     <p>Grounds: Coca-Cola reduced to syrup. Milk: Mayonnaise. Sugar: Crushed Jolly Ranchers.</p>
                 </div>
-                <div class="recipe-preview" onclick="showFeatured(2)">
+                <div class="recipe-preview" onclick="showFeatured(2); return false;" ontouchstart="showFeatured(2); return false;">
                     <span class="difficulty-badge difficulty-wtf">WTF</span>
                     <h4>Grandma's Secret Soup</h4>
                     <p>She never told us the secret ingredient. The FDA made her stop making it in 1987.</p>
@@ -465,6 +465,9 @@
     </footer>
 
     <script>
+        // Debug: log that script loaded
+        console.log("Cursed Recipes script loading...");
+        
         // Cursed recipe database
         const cursedRecipes = [
             {
@@ -779,6 +782,7 @@
         ];
         
         function generateRecipe() {
+            console.log("generateRecipe called!");
             const btn = document.querySelector('.generate-btn');
             const container = document.getElementById('recipeContainer');
             
@@ -865,6 +869,7 @@
         }
         
         function showFeatured(index) {
+            console.log("showFeatured called with index:", index);
             displayRecipe(featuredRecipes[index]);
         }
         
