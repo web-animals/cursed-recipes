@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cursed Recipes | Technically Edible, Deeply Concerning</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap');
@@ -390,151 +390,17 @@
             80%, 100% { content: "..."; }
         }
         
-        @media (max-width: 768px) {
-            .header {
-                padding: 2rem 1rem;
-            }
-            
+        @media (max-width: 600px) {
             .header h1 {
-                font-size: 1.8rem;
-                line-height: 1.2;
-            }
-            
-            .header p {
-                font-size: 1rem;
-            }
-            
-            .tagline {
-                font-size: 0.9rem;
-                padding: 0.6rem;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
-            
-            .generator-box {
-                padding: 1.5rem 1rem;
-                margin-bottom: 1.5rem;
-            }
-            
-            .generate-btn {
-                padding: 1rem 2rem;
-                font-size: 1.1rem;
-                width: 100%;
-            }
-            
-            .recipe-card {
-                padding: 1.5rem 1rem;
+                font-size: 2.2rem;
             }
             
             .recipe-title {
-                font-size: 1.4rem;
-            }
-            
-            .recipe-meta {
-                flex-direction: column;
-                gap: 0.5rem;
-                font-size: 0.9rem;
-            }
-            
-            .warning-banner {
-                font-size: 0.9rem;
-                padding: 0.6rem;
-            }
-            
-            .recipe-section h3 {
-                font-size: 1.2rem;
-            }
-            
-            .ingredients-list li {
-                flex-direction: column;
-                gap: 0.2rem;
-            }
-            
-            .ingredient-amount {
-                min-width: auto;
-                font-size: 0.9rem;
-            }
-            
-            .instructions-list li {
-                padding: 1rem 0 1rem 2.5rem;
-                font-size: 0.95rem;
-            }
-            
-            .instructions-list li:before {
-                width: 1.8rem;
-                height: 1.8rem;
-                font-size: 0.8rem;
-            }
-            
-            .nutrition-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.8rem;
-            }
-            
-            .nutrition-value {
-                font-size: 1.2rem;
-            }
-            
-            .nutrition-label {
-                font-size: 0.7rem;
-            }
-            
-            .chef-note {
-                padding: 0.8rem 1rem;
-                font-size: 0.95rem;
-            }
-            
-            .rating {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
-            
-            .featured-recipes h2 {
                 font-size: 1.6rem;
             }
             
-            .recipe-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .recipe-preview {
-                padding: 1.2rem;
-            }
-            
-            .recipe-preview h4 {
-                font-size: 1.1rem;
-            }
-            
-            .difficulty-badge {
-                font-size: 0.7rem;
-                padding: 0.2rem 0.6rem;
-            }
-            
-            footer {
-                padding: 2rem 1rem;
-                font-size: 0.85rem;
-            }
-        }
-        
-        /* Touch-friendly improvements */
-        @media (pointer: coarse) {
-            .generate-btn, .recipe-preview, .win-btn, .btn-98 {
-                min-height: 44px;
-            }
-            
-            .ingredients-list li, .instructions-list li {
-                padding-top: 0.8rem;
-                padding-bottom: 0.8rem;
-            }
-        }
-        
-        /* Prevent zoom on input focus for iOS */
-        @supports (-webkit-touch-callout: none) {
-            body {
-                -webkit-text-size-adjust: 100%;
+            .instructions-list li {
+                padding-left: 2.5rem;
             }
         }
     </style>
@@ -546,7 +412,7 @@
     </header>
     
     <div class="tagline">
-        ⚠️ These recipes work. That doesn't mean you should make them.
+        ⚠️ These recipes work. That does not mean you should make them.
     </div>
     
     <div class="container">
@@ -585,7 +451,7 @@
     
     <footer>
         <p>Made with 🤨 and a questionable relationship with food safety</p>
-        <p>*Chef is not a real chef. Please don't sue us.</p>
+        <p>*Chef is not a real chef. Please do not sue us.</p>
         <p style="margin-top: 1rem;">
             <a href="https://thehorsemoment.com">🐴 Also check out HorseOS</a>
         </p>
@@ -610,7 +476,7 @@
                     { amount: "Secret", item: "can of condensed cream of mushroom soup (this is the war crime)" }
                 ],
                 instructions: [
-                    "Boil pasta until it gives up on life. Drain, but save some pasta water (you won't use it, but feel guilty about it).",
+                    "Boil pasta until it gives up on life. Drain, but save some pasta water (you will not use it, but feel guilty about it).",
                     "Fry the 'bacon' in a pan until it looks disappointed in you.",
                     "Whisk eggs and parmesan in a bowl. Question your choices.",
                     "Here's where it goes wrong: Add the cream of mushroom soup to the eggs. Stir until it looks like something from a hospital.",
@@ -625,7 +491,7 @@
                     sodium: "2,847mg",
                     regret: "100%"
                 },
-                chefNote: "My Italian grandmother disowned me for this. She said the soup was 'an act of aggression.' She's not wrong.",
+                chefNote: "My Italian grandmother disowned me for this. She said the soup was 'an act of aggression.' She is not wrong.",
                 rating: "2.3",
                 reviews: "247 (mostly yelling)"
             },
@@ -665,13 +531,13 @@
                 difficulty: "wtf",
                 time: "1 hour 20 mins",
                 servings: "4-6 confused guests",
-                calories: "You're not ready",
+                calories: "You are not ready",
                 warning: "The surprise is betrayal",
                 ingredients: [
                     { amount: "2 lbs", item: "ground beef (questionable origin)" },
                     { amount: "1 cup", item: "breadcrumbs (stolen from neighbor)" },
                     { amount: "2", item: "eggs (laid under duress)" },
-                    { amount: "1/2 cup", item: "ketchup (the fancy kind, you're fancy now)" },
+                    { amount: "1/2 cup", item: "ketchup (the fancy kind, you are fancy now)" },
                     { amount: "1 packet", item: "onion soup mix (this is doing all the work)" },
                     { amount: "THE SURPRISE", item: "1 can of whole peeled potatoes (hidden inside like a meat grenade)" }
                 ],
@@ -700,18 +566,18 @@
                 difficulty: "illegal",
                 time: "15 mins",
                 servings: "Prison cafeteria",
-                calories: "It's salad, you're fine (you're not fine)",
+                calories: "It is salad, you are fine (you are not fine)",
                 warning: "This exists in school lunchrooms worldwide",
                 ingredients: [
-                    { amount: "4", item: "hot dogs (sliced into coins like you're making sausage soup)" },
+                    { amount: "4", item: "hot dogs (sliced into coins like you are making sausage soup)" },
                     { amount: "1 bag", item: "iceberg lettuce (the lettuce of sadness)" },
                     { amount: "1/2 cup", item: "shredded cheddar (the pre-shredded kind with wood pulp)" },
                     { amount: "1/4 cup", item: "ranch dressing (hidden valley of despair)" },
                     { amount: "1/4 cup", item: "croutons (stale bread you called 'rustic')" },
-                    { amount: "Optional", item: "dignity (you don't have any left)" }
+                    { amount: "Optional", item: "dignity (you do not have any left)" }
                 ],
                 instructions: [
-                    "Fry hot dog slices until they look like they're judging you.",
+                    "Fry hot dog slices until they look like they are judging you.",
                     "Tear lettuce with your hands. This is manual labor now.",
                     "Combine everything in a bowl. The hot dogs are still warm. The lettuce is cold. This is the temperature of regret.",
                     "Drizzle ranch. Watch it pool around the hot dogs like a sauce of shame.",
@@ -737,19 +603,19 @@
                 calories: "Student debt level",
                 warning: "This costs $3 and tastes like desperation",
                 ingredients: [
-                    { amount: "1", item: "package instant ramen (chicken flavor, you're basic)" },
+                    { amount: "1", item: "package instant ramen (chicken flavor, you are basic)" },
                     { amount: "1/2 cup", item: "heavy cream (stolen from coffee shop)" },
                     { amount: "1/2 cup", item: "parmesan (the powder kind, embrace it)" },
-                    { amount: "2 tbsp", item: "butter (margarine works, you're not picky)" },
+                    { amount: "2 tbsp", item: "butter (margarine works, you are not picky)" },
                     { amount: "THE PACKET", item: "chicken flavor powder (this is doing unspeakable things)" }
                 ],
                 instructions: [
-                    "Boil ramen noodles. Do not use the whole packet of seasoning. I see you. Don't do it.",
+                    "Boil ramen noodles. Do not use the whole packet of seasoning. I see you. Do not do it.",
                     "Drain most of the water, leave about 1/4 cup. This is your 'pasta water' now.",
                     "Add butter, cream, and parmesan. Stir until it looks like something you'd see at Olive Garden during a power outage.",
                     "Here's the cursed part: Sprinkle in HALF the ramen seasoning packet. Yes, the orange one. Yes, into cream sauce.",
                     "Stir until your ancestors weep.",
-                    "Serve in the ramen bowl because you don't have real plates."
+                    "Serve in the ramen bowl because you do not have real plates."
                 ],
                 nutrition: {
                     calories: "680",
@@ -772,19 +638,19 @@
                 warning: "This is a crime against three birds",
                 ingredients: [
                     { amount: "1", item: "can crescent roll dough (the foundation of our sins)" },
-                    { amount: "1 cup", item: "shredded turkey (from a deli, you're not cooking a whole bird)" },
+                    { amount: "1 cup", item: "shredded turkey (from a deli, you are not cooking a whole bird)" },
                     { amount: "1 cup", item: "rotisserie chicken (Costco, obviously)" },
-                    { amount: "1/2 cup", item: "duck confit (you're fancy now, look at you)" },
+                    { amount: "1/2 cup", item: "duck confit (you are fancy now, look at you)" },
                     { amount: "1/2 cup", item: "stuffing mix (just add water, hope for best)" },
                     { amount: "1 can", item: "cranberry sauce (the gel kind, we have standards)" }
                 ],
                 instructions: [
                     "Unroll crescent dough into one sheet. Patch the seams. This is your bird prison.",
-                    "Layer: stuffing, turkey, chicken, duck. It's a poultry stratigraphy of hubris.",
+                    "Layer: stuffing, turkey, chicken, duck. It is a poultry stratigraphy of hubris.",
                     "Roll it up like a burrito. A burrito that has seen war.",
                     "Bake at 375°F until golden brown and your family asks what that smell is.",
-                    "Slice. Serve. Watch as the cranberry sauce gel seeps out like it's fleeing.",
-                    "Tell everyone it's 'fusion.'"
+                    "Slice. Serve. Watch as the cranberry sauce gel seeps out like it is fleeing.",
+                    "Tell everyone it is 'fusion.'"
                 ],
                 nutrition: {
                     calories: "840",
@@ -794,7 +660,7 @@
                     sodium: "1,980mg",
                     birds_harmed: "3"
                 },
-                chefNote: "I brought this to Friendsgiving. I'm not invited to Friendsgiving anymore. I have to do real Thanksgiving with my family now.",
+                chefNote: "I brought this to Friendsgiving. I am not invited to Friendsgiving anymore. I have to do real Thanksgiving with my family now.",
                 rating: "2.1",
                 reviews: "89 (many from therapy)"
             }
@@ -813,10 +679,10 @@
                     { amount: "1/2 cup", item: "ketchup (this is your 'sauce')" },
                     { amount: "4 sticks", item: "string cheese (torn unevenly by hand)" },
                     { amount: "1/4 cup", item: "pepperoni (the weird cup kind that holds grease)" },
-                    { amount: "Optional", item: "self-respect (you're out of stock)" }
+                    { amount: "Optional", item: "self-respect (you are out of stock)" }
                 ],
                 instructions: [
-                    "Make mashed potatoes. Spread on baking sheet like you're laying concrete.",
+                    "Make mashed potatoes. Spread on baking sheet like you are laying concrete.",
                     "Bake at 400°F for 15 mins until it has the structural integrity of damp cardboard.",
                     "Spread ketchup. Yes, ketchup. On potatoes. This is happening.",
                     "Tear string cheese with your bare hands. Place haphazardly. The unevenness is 'rustic.'",
@@ -850,11 +716,11 @@
                     { amount: "The lies", item: "you tell yourself that this is fine" }
                 ],
                 instructions: [
-                    "Reduce Coca-Cola in a pan until it's black tar. This is your 'espresso.'",
+                    "Reduce Coca-Cola in a pan until it is black tar. This is your 'espresso.'",
                     "Add hot water to a mug. The mug should be sad.",
                     "Add the cola syrup. Watch it sink like your dreams.",
-                    "Whisk in mayonnaise. Yes, whisk. Yes, mayonnaise. No, I'm not okay.",
-                    "Sprinkle crushed Jolly Ranchers on top. They won't dissolve. That's the point.",
+                    "Whisk in mayonnaise. Yes, whisk. Yes, mayonnaise. No, I am not okay.",
+                    "Sprinkle crushed Jolly Ranchers on top. They will not dissolve. That is the point.",
                     "Drink. Question everything. Tweet about it."
                 ],
                 nutrition: {
@@ -863,7 +729,7 @@
                     carbs: "78g",
                     fat: "8g",
                     sodium: "280mg",
-                    caffeine: "It's complicated"
+                    caffeine: "It is complicated"
                 },
                 chefNote: "I made this during finals week. I passed the class but failed myself.",
                 rating: "0.8",
@@ -875,20 +741,20 @@
                 time: "???",
                 servings: "No one knows",
                 calories: "Classified",
-                warning: "The secret ingredient is not love. We don't know what it is.",
+                warning: "The secret ingredient is not love. We do not know what it is.",
                 ingredients: [
                     { amount: "1 pot", item: "water (from a questionable source)" },
                     { amount: "3", item: "vegetables (unidentified, possibly root-based)" },
-                    { amount: "1 lb", item: "meat (grandma won't specify)" },
+                    { amount: "1 lb", item: "meat (grandma will not specify)" },
                     { amount: "1 handful", item: "herbs (from her 'garden')" },
                     { amount: "THE SECRET", item: "a brown liquid in an unmarked bottle" }
                 ],
                 instructions: [
                     "Grandma starts this at 4 AM. You've never seen her make it.",
                     "She keeps the kitchen door closed. You hear chanting.",
-                    "The smell fills the house. It's familiar but wrong.",
-                    "She serves it with a smile that doesn't reach her eyes.",
-                    "You eat it. You love it. You don't know why.",
+                    "The smell fills the house. It is familiar but wrong.",
+                    "She serves it with a smile that does not reach her eyes.",
+                    "You eat it. You love it. You do not know why.",
                     "You ask for the recipe. She says 'someday.' She said this in 1987."
                 ],
                 nutrition: {
@@ -899,7 +765,7 @@
                     sodium: "???",
                     nostalgia: "100%"
                 },
-                chefNote: "I've tried to recreate this for 20 years. It never works. I think the secret ingredient is that she's slightly psychic.",
+                chefNote: "I have tried to recreate this for 20 years. It never works. I think the secret ingredient is that she's slightly psychic.",
                 rating: "5.0",
                 reviews: "12 (all family members, all scared)"
             }
