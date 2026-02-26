@@ -80,6 +80,11 @@
             box-shadow: 0 6px 0 #c44444;
             text-transform: uppercase;
             letter-spacing: 1px;
+            -webkit-tap-highlight-color: rgba(0,0,0,0.2);
+            touch-action: manipulation;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         .generate-btn:hover {
@@ -338,6 +343,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            -webkit-tap-highlight-color: rgba(0,0,0,0.2);
+            touch-action: manipulation;
         }
         
         .recipe-preview:hover {
@@ -860,6 +867,26 @@
         function showFeatured(index) {
             displayRecipe(featuredRecipes[index]);
         }
+        
+        // iOS Safari touch fix - ensure buttons work on touch devices
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fix for iOS not recognizing clicks on buttons properly
+            const btn = document.querySelector('.generate-btn');
+            if (btn) {
+                btn.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    generateRecipe();
+                }, {passive: false});
+            }
+            
+            // Also fix featured recipe cards
+            document.querySelectorAll('.recipe-preview').forEach((card, index) => {
+                card.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    showFeatured(index);
+                }, {passive: false});
+            });
+        });
     </script>
 </body>
 </html>
